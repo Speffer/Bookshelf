@@ -1,26 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Router, Route, Switch } from 'react-router-dom';
+import { Layout } from 'antd';
+import createHistory from 'history/createBrowserHistory';
+import Home from './pages/Home';
+import Book from './pages/Book';
+import Category from './pages/Category';
+import Nav from './components/Nav';
+import './index.css';
 
-function App() {
+const { Content } = Layout;
+
+
+const App = () => {
+  const history = createHistory();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router history={history}>
+          <Nav />
+          
+          <Content style={{ padding: '40px 50px' }}>
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/book/:id" exact component={Book} />
+              <Route path="/category/:id" exact component={Category} />
+            </Switch>
+          </Content>
+      </Router>
     </div>
   );
-}
+};
 
 export default App;

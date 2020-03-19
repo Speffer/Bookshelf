@@ -1,13 +1,62 @@
+@import '~antd/dist/antd.css';
+
 body {
+  background-color: #f7f5f2;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.site-title {
+  color: #172645;
+}
+
+.site-order-link {
+  font-size: 1em;
+}
+
+.site-order-link:hover {
+  color: #f92240;
+}
+
+.category-title {
+  color: #f92240;
+}
+
+.category-title:hover {
+  color: #172645;
+}
+
+.ant-btn-primary {
+  background-color: #172645;
+  border-color: #172645;
+}
+
+.ant-btn-primary:hover {
+  background-color: #C9F0FF;
+  border-color: #172645;
+  color: #172645;
+}
+
+.ant-btn-primary:focus {
+  background-color: #C9F0FF;
+  border-color: #172645;
+  color: #172645;
+}
+
+.btn-default {
+  background-color: #f92240;
+  border-color: #f92240;
+  margin-left: 5px;
+  color: #ffff;
+}
+
+.btn-default:hover {
+  background-color: #ffebf4;
+  border-color: #f92240;
+  color: #f92240;
+}
+
+.btn-default:focus {
+  background-color: #ffebf4;
+  border-color: #f92240;
+  color: #f92240;
 }
