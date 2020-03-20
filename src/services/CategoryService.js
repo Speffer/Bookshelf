@@ -1,13 +1,28 @@
-class CategoryService {
-  save(category) {
-    let storageCategories = localStorage.getItem('categories');
+const saveCategory = () => {
+  const categories = [
+    {
+      id: 1,
+      title: 'Estou lendo'
+    }, {
+      id: 2,
+      title: 'Quero ler'
+    }, {
+      id: 3,
+      title: 'Já lido'
+    }, {
+      id: 4,
+      title: 'Sem categoria'
+    }
+  ];
 
-    let newCategory = {
-      categories: [ ...storageCategories, ...category ]
-    };
-
-    localStorage.setItem(JSON.stringify(newCategory));
-  };
+  localStorage.setItem('categories', JSON.stringify(categories));
 };
 
-export default CategoryService;
+const getCategory = () => {
+  return localStorage.getItem('categories');
+};
+
+export default {
+  saveCategory,
+  getCategory
+};

@@ -1,16 +1,24 @@
-class CommentService {
-  save(comment) {
-    let storageComment = localStorage.getItem('comments');
+const save = (comment) => {
+  let storageComment = localStorage.getItem('comments');
+  let newComment = {};
 
-    let newComment = {
+  if(storageComment) {
+    newComment = {
       comments: [ ...storageComment, ...comment ]
     };
+  }else {
+    newComment = {
+      comments: [ ...comment ]
+    };
+  }
 
-    localStorage.setItem(JSON.stringify(newComment));
-  };
+  localStorage.setItem('comments', JSON.stringify(newComment));
+};
 
-  update(comment) {
-    let storageComment = localStorage.getItem('comments');
+const update = (comment) => {
+  let storageComment = localStorage.getItem('comments');
+
+  if(storageComment) {
     let newComments = [ ...storageComment ];
     let indexComment = newComments.findIndex(u => u.id === comment.id);
     
@@ -19,10 +27,13 @@ class CommentService {
     }
 
     localStorage.setItem('comments', JSON.stringify(newComments));
-  };
+  }
+};
 
-  delete(comment) {
-    let storageComment = localStorage.getItem('comments');
+const deleteComment = (comment) => {
+  let storageComment = localStorage.getItem('comments');
+
+  if(storageComment) {
     let newComments = [ ...storageComment ];
     let indexComment = newComments.findIndex(u => u.id === comment.id);
     
@@ -31,7 +42,16 @@ class CommentService {
     }
 
     localStorage.setItem('comments', JSON.stringify(newComments));
-  };
+  }
 };
 
-export default CommentService; 
+const get = () => {
+  return localStorage.getItem('comments');
+}
+
+export default {
+  save, 
+  update,
+  deleteComment,
+  get
+}; 

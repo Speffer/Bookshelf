@@ -1,13 +1,97 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Row, Col, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import CardList from '../../components/CardList';
+import CategoryService from '../../services/CategoryService';
+import BookService from '../../services/BookService';
+import CategoriesEnum from '../../enums/CategoriesEnum';
+import NewBookModal from './NewBookModal';
 import '../../index.css'
 
 
 const Home = () => {
+  const [categories, setCategories] = useState([]);
+  const [books, setBooks] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    getBooks();
+  }, []);
+
+  useEffect(() => {
+    getCategories();
+  }, [books]);
+
+  const getCategories = async() => {
+    try {
+      let response = await CategoryService.getCategory();
+
+      setCategories(JSON.parse(response));
+    } catch (error) {
+      
+    }
+  }
+
+  const getBooks = async() => {
+    try {
+      let response = await BookService.get();
+
+      setBooks(JSON.parse(response));
+    } catch (error) {
+      
+    }
+  }
+
+  const renderCardLists = () => {
+    return categories.map((category, index) => {
+      switch(category.id) {
+        case CategoriesEnum.READ:
+          return (
+            <CardList
+              key={index} 
+              categoryID={category.id} 
+              data={books}
+              title={<Link to={`/category/${category.id}`}><h2 className="category-title">Já Lidos</h2></Link> } 
+            />
+          );
+
+        case CategoriesEnum.READING:
+          return (
+            <CardList 
+              key={index}
+              categoryID={category.id} 
+              data={books} 
+              title={<Link to={`/category/${category.id}`}><h2 className="category-title">Estou Lendo</h2></Link> } 
+            />
+          );
+
+        case CategoriesEnum.WANT_TO_READ:
+          return (
+            <CardList 
+              key={index}
+              categoryID={category.id} 
+              data={books} 
+              title={<Link to={`/category/${category.id}`}><h2 className="category-title">Quero Ler</h2></Link> } 
+            />
+          );
+
+        case CategoriesEnum.WITHOUT:
+          return (
+            <CardList 
+              key={index}
+              categoryID={category.id} 
+              data={books} 
+              title={<Link to={`/category/${category.id}`}><h2 className="category-title">Sem Categoria</h2></Link> }
+            />
+          );
+      }
+    });
+  };
+
   return (
     <div>
+      <NewBookModal books={books} getBooks={() => getBooks}  visible={modalVisible} onDismiss={() => setModalVisible(false)} />
+
       <Row justify="space-between">
         <Col xs={24} sm={24} md={16} lg={16}>
           <h2 className="site-title">
@@ -18,19 +102,15 @@ const Home = () => {
         </Col>
 
         <Col xs={24} sm={24} md={8} lg={8}>
-          <Button type="primary" size="large">
+          <Button onClick={() => setModalVisible(true)} type="primary" size="large">
             + Novo livro
           </Button>
         </Col>
       </Row>
 
-      <CardList title={<Link to="/category/0"><h2 className="category-title">Sem Categoria</h2></Link> }/>
-
-      <CardList title={<Link to="/category/1"><h2 className="category-title">Quero Ler</h2></Link> } />
-
-      <CardList title={<Link to="/category/2"><h2 className="category-title">Já Lidos</h2></Link> } />
-
-      <CardList title={<Link to="/category/3"><h2 className="category-title">Estou Lendo</h2></Link> } />
+      <div key={books.length} >
+        { categories.length > 0 && renderCardLists() }
+      </div>
     </div>
   );
 };

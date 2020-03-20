@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
 import createHistory from 'history/createBrowserHistory';
@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Book from './pages/Book';
 import Category from './pages/Category';
 import Nav from './components/Nav';
+import CategoryService from './services/CategoryService';
 import './index.css';
 
 const { Content } = Layout;
@@ -13,6 +14,16 @@ const { Content } = Layout;
 
 const App = () => {
   const history = createHistory();
+
+  useEffect(() => {
+    initLocalStorage();
+  }, []);
+
+  const initLocalStorage = () => {
+    CategoryService.saveCategory();
+    localStorage.setItem('books', '[]');
+    localStorage.setItem('comments', '[]');
+  };
 
   return (
     <div>

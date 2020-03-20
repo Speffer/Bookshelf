@@ -3,106 +3,18 @@ import { Row, Col, Card } from 'antd';
 import { Link } from 'react-router-dom';
 import './index.css'
 
-const data = [
-  {
-    id: 1,
-    timestamp: '2020-02-12',
-    title: 'O Mundo Assombrado pelos Demônios',
-    description: 'auhsduiasdhuaisdhasuidhaisudhaiusdhiaussadasdasd', 
-    author: 'Carl Sagan',
-    category: 1,
-    link: "https://static.mercadoshops.com/livro-mundo-assombrado-pelos-demonios-carl-sagan_iZ1024641864XvZxXpZ1XfZ68247532-1135427782-1.jpgXsZ68247532xIM.jpg",
-    deleted: false
-  },
-  {
-    id: 2,
-    timestamp: '2020-02-12',
-    title: 'Some title',
-    description: 'auhsduiasdhuaisdhasuidhaisudhaiusdhiaussadasdasd', 
-    author: 'Carl Sagan',
-    category: 1,
-    link: "https://static.mercadoshops.com/livro-mundo-assombrado-pelos-demonios-carl-sagan_iZ1024641864XvZxXpZ1XfZ68247532-1135427782-1.jpgXsZ68247532xIM.jpg",
-    deleted: false
-  },
-  {
-    id: 3,
-    timestamp: '2020-02-12',
-    title: 'Some title',
-    description: 'auhsduiasdhuaisdhasuidhaisudhaiusdhiaussadasdasd', 
-    author: 'Carl Sagan',
-    category: 1,
-    link: "https://static.mercadoshops.com/livro-mundo-assombrado-pelos-demonios-carl-sagan_iZ1024641864XvZxXpZ1XfZ68247532-1135427782-1.jpgXsZ68247532xIM.jpg",
-    deleted: false
-  },
-  {
-    id: 4,
-    timestamp: '2020-02-12',
-    title: 'Some title',
-    description: 'auhsduiasdhuaisdhasuidhaisudhaiusdhiaussadasdasd', 
-    author: 'Carl Sagan',
-    category: 1,
-    link: "https://static.mercadoshops.com/livro-mundo-assombrado-pelos-demonios-carl-sagan_iZ1024641864XvZxXpZ1XfZ68247532-1135427782-1.jpgXsZ68247532xIM.jpg",
-    deleted: false
-  },
-  {
-    id: 5,
-    timestamp: '2020-02-12',
-    title: 'Some title',
-    description: 'auhsduiasdhuaisdhasuidhaisudhaiusdhiaussadasdasd', 
-    author: 'Carl Sagan',
-    category: 1,
-    link: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    deleted: false
-  },
-  {
-    id: 6,
-    timestamp: '2020-02-12',
-    title: 'Some title',
-    description: 'auhsduiasdhuaisdhasuidhaisudhaiusdhiaussadasdasd', 
-    author: 'Carl Sagan',
-    category: 1,
-    link: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    deleted: false
-  },
-  {
-    id: 7,
-    timestamp: '2020-02-12',
-    title: 'Some title',
-    description: 'auhsduiasdhuaisdhasuidhaisudhaiusdhiaussadasdasd', 
-    author: 'Carl Sagan',
-    category: 1,
-    link: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    deleted: false
-  },
-  {
-    id: 8,
-    timestamp: '2020-02-12',
-    title: 'Some title',
-    description: 'auhsduiasdhuaisdhasuidhaisudhaiusdhiaussadasdasd', 
-    author: 'Carl Sagan',
-    category: 1,
-    link: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    deleted: false
-  },
-  {
-    id: 9,
-    timestamp: '2020-02-12',
-    title: 'Some title',
-    description: 'auhsduiasdhuaisdhasuidhaisudhaiusdhiaussadasdasd', 
-    author: 'Carl Sagan',
-    category: 1,
-    link: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    deleted: false
-  },
-  
-];
+const CardList = ({ title, data, categoryID }) => {
+  const books = [ ...data ];
 
-const CardList = ({ title }) => {
   const renderCard = () => {
-    return data.map(({deleted, link, title, author, id}) => {
-      if(!deleted) {
+    let count = 0;
+
+    let booksToShow = books.map(({ deleted, link, title, author, id, category }, index) => {
+      if(!deleted && categoryID === category) {
+        count++;
+
         return (
-          <Col xs={24} sm={24} md={6} lg={6} xl={4}>
+          <Col key={index} xs={24} sm={24} md={6} lg={6} xl={4}>
             <Card
               className="card-body"
               cover={<img className="card-image" alt="book" src={link} />}
@@ -116,6 +28,10 @@ const CardList = ({ title }) => {
         );
       }
     });
+
+
+
+    return count > 0 ? booksToShow : <p style={{ color: '#172645' }}>Sem livros para essa categoria!</p>;
   };
 
   return (
@@ -124,7 +40,7 @@ const CardList = ({ title }) => {
         <Card title={ title }>
           <Row className="card-scroll" gutter={[12, 24]}>
             { renderCard() }
-          </Row>
+          </Row>        
         </Card>
       </Col>
     </Row>
