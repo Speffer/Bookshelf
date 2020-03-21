@@ -6,6 +6,7 @@ import CategoryService from '../../services/CategoryService';
 import BookService from '../../services/BookService';
 import CategoriesEnum from '../../enums/CategoriesEnum';
 import NewBookModal from './NewBookModal';
+import AnyUtils from '../../utils/AnyUtils';
 import '../../index.css'
 
 
@@ -23,6 +24,20 @@ const Home = () => {
       getCategories();
   }, [books]);
 
+  const filterByAlpha = useCallback(() => {
+    let newOrder = AnyUtils.orderByAlpha(books);
+
+    setBooks(newOrder);
+    console.log('A hello there', books)
+  }, [books]);
+
+  const filterByDate = useCallback(() => {
+    let newOrder = AnyUtils.orderByDate(books);
+
+    setBooks(newOrder);
+    console.log('hello there', books)
+  }, [books]);
+
   const getCategories = async() => {
     try {
       let response = await CategoryService.getCategory();
@@ -31,17 +46,19 @@ const Home = () => {
     } catch (error) {
       // Se fosse integrado com uma api precisaria do catch
     }
-  }
+  };
 
   const getBooks = () => {
     try {
       let response = BookService.get();
 
-      setBooks(JSON.parse(response));
+      let booksByAlpha = AnyUtils.orderByAlpha(JSON.parse(response)); 
+
+      setBooks(booksByAlpha);
     } catch (error) {
       // Se fosse integrado com uma api precisaria do catch
     }
-  }
+  };
 
   const renderCardLists = useCallback(() => {
     return categories.map((category, index) => {
@@ -87,7 +104,7 @@ const Home = () => {
           );
       }
     });
-  }, [categories]);
+  }, [categories, books]);
 
   return (
     <div>
@@ -97,8 +114,8 @@ const Home = () => {
         <Col xs={24} sm={24} md={16} lg={16}>
           <h2 className="site-title">
             Ordernar por: 
-            <Button className="site-order-link site-title" type="link">Ordem Alfabética</Button> - 
-            <Button className="site-order-link site-title" type="link">Data de Criação</Button>
+            <Button onClick={() => filterByAlpha()} className="site-order-link site-title" type="link">Ordem Alfabética</Button> - 
+            <Button onClick={() => filterByDate()}  className="site-order-link site-title" type="link">Data de Criação</Button>
           </h2>
         </Col> 
 

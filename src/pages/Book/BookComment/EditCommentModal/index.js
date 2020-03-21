@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Input } from 'antd';
 import CommentService from '../../../../services/CommentService';
-import MessageUtils from '../../../../utils/MessageUtils';
+import AnyUtils from '../../../../utils/AnyUtils';
 import '../../../../index.css'
 
 const { TextArea } = Input;
@@ -25,7 +25,7 @@ const EditCommentModal = ({
     formData.body = body;
     CommentService.update(formData);
     getComments && getComments();
-    MessageUtils.swalSuccess('Comentário editado com sucesso!');
+    AnyUtils.swalSuccess('Comentário editado com sucesso!');
     onDismiss && onDismiss();
   }
 

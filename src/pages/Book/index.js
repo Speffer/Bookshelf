@@ -3,7 +3,7 @@ import { Row, Col, Button, Card, Typography, Popconfirm } from 'antd';
 import { useParams } from 'react-router-dom';
 import CategoryService from '../../services/CategoryService';
 import BookService from '../../services/BookService';
-import MessageUtils from '../../utils/MessageUtils';
+import AnyUtils from '../../utils/AnyUtils';
 import moment from 'moment';
 import '../../index.css'
 import EditBookModal from './EditBookModal';
@@ -28,7 +28,7 @@ const Book = ({ history }) => {
       BookService.deleteBook(parseInt(id));
 
       history.push('/')
-      MessageUtils.swalSuccess('Livro deletado com sucesso!');
+      AnyUtils.swalSuccess('Livro deletado com sucesso!');
     } catch (error) {
       // Se fosse integrado com uma api precisaria do catch
     }
@@ -55,15 +55,15 @@ const Book = ({ history }) => {
   const renderCategoryTitle = useCallback(() => {
     return (
       <Col xs={24} sm={24} md={24} lg={6} xl={6}>
-        <Button size="small" style={{ cursor: 'default', margin: 5 }} type="primary">{categoryTitle}</Button>
+        <Button key={categoryTitle} size="small" style={{ cursor: 'default', margin: 5 }} type="primary">{categoryTitle}</Button>
       </Col>
     );
-  }, [book]);
+  }, [book, categoryTitle]);
 
   return (
     <div>
       <Row gutter={[36, 36]}>
-        <EditBookModal initialValue={book} getBooks={setBook} visible={modalVisible} onDismiss={() => setModalVisible(false)} />
+        <EditBookModal setCategoryTitle={setCategoryTitle} initialValue={book} getBooks={setBook} visible={modalVisible} onDismiss={() => setModalVisible(false)} />
 
         <Col xs={24} sm={24} md={8} lg={8} xl={8}>
           <Card

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Input, Select, Form } from 'antd';
 import CategoryService from '../../../services/CategoryService';
 import BookService from '../../../services/BookService';
-import MessageUtils from '../../../utils/MessageUtils';
+import AnyUtils from '../../../utils/AnyUtils';
 import '../../../index.css'
 import moment from 'moment';
 
@@ -44,7 +44,7 @@ const NewBookModal = ({
         await BookService.save(formData);
         form.resetFields();
         getBooks && getBooks();
-        MessageUtils.swalSuccess('Livro salvo com sucesso!');
+        AnyUtils.swalSuccess('Livro salvo com sucesso!');
         onDismiss && onDismiss();
       });
   }

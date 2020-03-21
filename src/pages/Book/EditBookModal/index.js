@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Input, Select, Form } from 'antd';
 import CategoryService from '../../../services/CategoryService';
 import BookService from '../../../services/BookService';
-import MessageUtils from '../../../utils/MessageUtils';
+import AnyUtils from '../../../utils/AnyUtils';
 import '../../../index.css'
 import moment from 'moment';
 
@@ -11,6 +11,7 @@ const { Option } = Select;
 
 
 const EditBookModal = ({ 
+    setCategoryTitle,
     getBooks, 
     visible, 
     onDismiss, 
@@ -33,6 +34,16 @@ const EditBookModal = ({
     }
   }
 
+  const findCategoryTitle = (data) => {
+    if(categories.length > 0 && data) {
+      categories.map((category) => {
+        if(category.id === data.category) {
+          setCategoryTitle && setCategoryTitle(category.title);
+        }
+      });
+    }
+  }
+
   const onClose = () => {
     onDismiss && onDismiss(); 
   };
@@ -44,7 +55,8 @@ const EditBookModal = ({
         await BookService.update(formData);
         form.resetFields();
         getBooks && getBooks(formData);
-        MessageUtils.swalSuccess('Livro editado com sucesso!');
+        findCategoryTitle(formData);
+        AnyUtils.swalSuccess('Livro editado com sucesso!');
         onDismiss && onDismiss();
       });
   }

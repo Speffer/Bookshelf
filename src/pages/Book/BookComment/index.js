@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Button, Card, Comment, Avatar, Input, Popconfirm } from 'antd';
 import CommentService from '../../../services/CommentService';
-import MessageUtils from '../../../utils/MessageUtils';
+import AnyUtils from '../../../utils/AnyUtils';
 import moment from 'moment';
 import EditCommentModal from './EditCommentModal';
 import '../../../index.css'
@@ -30,9 +30,8 @@ const BookComment = ({ bookID }) => {
 
       CommentService.save(form);
       getComments();
-      setNewComment('');
 
-      MessageUtils.swalSuccess('Comentário salvo com sucesso!');
+      AnyUtils.swalSuccess('Comentário salvo com sucesso!');
     } catch (error) {
       // Se fosse integrado com uma api precisaria do catch
     }
@@ -43,7 +42,7 @@ const BookComment = ({ bookID }) => {
       CommentService.deleteComment(id);
       getComments();
 
-      MessageUtils.swalSuccess('Comentário deletado com sucesso!');
+      AnyUtils.swalSuccess('Comentário deletado com sucesso!');
     } catch (error) {
       // Se fosse integrado com uma api precisaria do catch
     }
