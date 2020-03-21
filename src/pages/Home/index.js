@@ -19,7 +19,8 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    getCategories();
+    if(books.length > 0)
+      getCategories();
   }, [books]);
 
   const getCategories = async() => {
@@ -28,21 +29,21 @@ const Home = () => {
 
       setCategories(JSON.parse(response));
     } catch (error) {
-      
+      // Se fosse integrado com uma api precisaria do catch
     }
   }
 
-  const getBooks = async() => {
+  const getBooks = () => {
     try {
-      let response = await BookService.get();
+      let response = BookService.get();
 
       setBooks(JSON.parse(response));
     } catch (error) {
-      
+      // Se fosse integrado com uma api precisaria do catch
     }
   }
 
-  const renderCardLists = () => {
+  const renderCardLists = useCallback(() => {
     return categories.map((category, index) => {
       switch(category.id) {
         case CategoriesEnum.READ:
@@ -86,11 +87,11 @@ const Home = () => {
           );
       }
     });
-  };
+  }, [categories]);
 
   return (
     <div>
-      <NewBookModal books={books} getBooks={() => getBooks}  visible={modalVisible} onDismiss={() => setModalVisible(false)} />
+      <NewBookModal books={books} getBooks={getBooks} visible={modalVisible} onDismiss={() => setModalVisible(false)} />
 
       <Row justify="space-between">
         <Col xs={24} sm={24} md={16} lg={16}>
@@ -99,7 +100,7 @@ const Home = () => {
             <Button className="site-order-link site-title" type="link">Ordem Alfabética</Button> - 
             <Button className="site-order-link site-title" type="link">Data de Criação</Button>
           </h2>
-        </Col>
+        </Col> 
 
         <Col xs={24} sm={24} md={8} lg={8}>
           <Button onClick={() => setModalVisible(true)} type="primary" size="large">
@@ -108,9 +109,9 @@ const Home = () => {
         </Col>
       </Row>
 
-      <div key={books.length} >
-        { categories.length > 0 && renderCardLists() }
-      </div>
+      {books.length === 0 && <p style={{ color: '#172645' }}>Nenhum livro adicionado</p>}
+
+      {renderCardLists()}
     </div>
   );
 };
