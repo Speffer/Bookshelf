@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Button } from 'antd';
 import { useParams } from 'react-router-dom';
 import BookService from '../../services/BookService';
@@ -64,7 +64,7 @@ const Category = () => {
       <CardList
         categoryID={parseInt(id)} 
         data={books}
-        title={<h2 className="category-title">{ title }</h2>} 
+        title={<h2 style={{ color: '#f92240' }}>{ title }</h2>} 
       />
     </div>
   );

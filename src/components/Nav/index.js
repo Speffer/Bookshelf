@@ -8,7 +8,7 @@ const Nav = () => (
   <div className="site-page-header">
     <Link to="/">
       <Row>
-        <img className="books-logo" src={logo} />
+        <img alt="logo" className="books-logo" src={logo} />
         <h1 className="site-nav-title">Bookshelf</h1>
       </Row>
     </Link>

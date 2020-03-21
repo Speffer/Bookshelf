@@ -12,19 +12,19 @@ const CardList = ({ title, data, categoryID }) => {
   const renderCard = useCallback(() => {
     let count = 0;
 
-    let booksToShow = books.map(({ deleted, link, title, author, id, category }) => {
-      if(!deleted && categoryID === category) {
+    let booksToShow = books.map((book) => {
+      if(!book.deleted && categoryID === book.category) {
         count++;
 
         return (
-          <Col key={id} xs={24} sm={24} md={6} lg={6} xl={4}>
+          <Col key={book.id} xs={24} sm={24} md={6} lg={6} xl={4}>
             <Card
               className="card-body"
-              cover={<img className="card-image" alt="book" src={link} />}
-            >
-              <Link to={`/book/${id}`}>
-                <h3>{ title }</h3>
-                <p style={{ color: '#172645' }}>{ author }</p>
+              cover={<img className="card-image" alt="book" src={book.link} />}
+            > 
+              <Link to={{ state: { book }, pathname: `/book/${book.id}`}}>
+                <h3>{ book.title }</h3>
+                <p style={{ color: '#172645' }}>{ book.author }</p>
               </Link>
             </Card>
           </Col>

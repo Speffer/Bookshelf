@@ -14,8 +14,8 @@ const save = (book) => {
 
 const update = (book) => {
   let storageBooks = localStorage.getItem('books');
-  let newBook = [ ...storageBooks ];
-  let indexBook = storageBooks.findIndex(u => u.id === book.id);
+  let newBook = [ ...JSON.parse(storageBooks) ];
+  let indexBook = newBook.findIndex(u => u.id === book.id);
   
   if(indexBook > -1) {
     newBook.splice(indexBook, 1, { ...book })
@@ -24,10 +24,10 @@ const update = (book) => {
   localStorage.setItem('books', JSON.stringify(newBook));
 };
 
-const deleteBook = (book) => {
+const deleteBook = (id) => {
   let storageBooks = localStorage.getItem('books');
-  let newBooks = [ ...storageBooks ];
-  let indexBook = storageBooks.findIndex(u => u.id === book.id);
+  let newBooks = [ ...JSON.parse(storageBooks) ];
+  let indexBook = newBooks.findIndex(u => u.id === id);
   
   if(indexBook > -1) {
     newBooks.splice(indexBook, 1)

@@ -91,7 +91,7 @@ const Home = () => {
 
   return (
     <div>
-      <NewBookModal books={books} getBooks={getBooks} visible={modalVisible} onDismiss={() => setModalVisible(false)} />
+      <NewBookModal getBooks={getBooks} visible={modalVisible} onDismiss={() => setModalVisible(false)} />
 
       <Row justify="space-between">
         <Col xs={24} sm={24} md={16} lg={16}>
@@ -109,7 +109,9 @@ const Home = () => {
         </Col>
       </Row>
 
-      {books.length === 0 && <p style={{ color: '#172645' }}>Nenhum livro adicionado</p>}
+      {books.length === 0 && 
+        <h2 style={{ marginTop: 30, color: '#f92240' }}>Nenhum livro adicionado, adicione clicando no botão "Novo Livro"</h2>
+      }
 
       {renderCardLists()}
     </div>
