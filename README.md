@@ -2,12 +2,12 @@
 Após clonar o projeto verifique se possui o npm e o react instalados globalmente em seu computador.
 Depois de verificar abra o terminal dentro da pasta do projeto, nomeada bookshelf, e rode o seguinte comando:
 
-## npm install
+### `npm install`
 
 Este comando vai instalar todas as dependências necessárias para o projeto rodar.
 Após a conclusão do comando, no mesmo terminal use o comando:
 
-## npm start
+### `npm start`
 
 O projeto irá startar em modo de desenvolvimento abrindo uma janela em seu navegador, a url será localhost:3000.
 Abaixo seguem os scripts e instruções padrões do react.
