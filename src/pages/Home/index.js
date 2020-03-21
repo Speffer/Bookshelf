@@ -24,18 +24,16 @@ const Home = () => {
       getCategories();
   }, [books]);
 
-  const filterByAlpha = useCallback(() => {
-    let newOrder = AnyUtils.orderByAlpha(books);
+  const filterByAlpha = useCallback(async() => {
+    let newOrder = await AnyUtils.orderByAlpha(books);
 
     setBooks(newOrder);
-    console.log('A hello there', books)
   }, [books]);
 
-  const filterByDate = useCallback(() => {
-    let newOrder = AnyUtils.orderByDate(books);
+  const filterByDate = useCallback(async() => {
+    let newOrder = await AnyUtils.orderByDate(books);
 
     setBooks(newOrder);
-    console.log('hello there', books)
   }, [books]);
 
   const getCategories = async() => {
@@ -48,9 +46,9 @@ const Home = () => {
     }
   };
 
-  const getBooks = () => {
+  const getBooks = async() => {
     try {
-      let response = BookService.get();
+      let response = await BookService.get();
 
       let booksByAlpha = AnyUtils.orderByAlpha(JSON.parse(response)); 
 
@@ -68,7 +66,7 @@ const Home = () => {
             <CardList
               key={index} 
               categoryID={category.id} 
-              data={books}
+              books={books}
               title={<Link to={`/category/${category.id}`}><h2 className="category-title">Já Lidos</h2></Link> } 
             />
           );
@@ -78,7 +76,7 @@ const Home = () => {
             <CardList 
               key={index}
               categoryID={category.id} 
-              data={books} 
+              books={books} 
               title={<Link to={`/category/${category.id}`}><h2 className="category-title">Estou Lendo</h2></Link> } 
             />
           );
@@ -88,7 +86,7 @@ const Home = () => {
             <CardList 
               key={index}
               categoryID={category.id} 
-              data={books} 
+              books={books} 
               title={<Link to={`/category/${category.id}`}><h2 className="category-title">Quero Ler</h2></Link> } 
             />
           );
@@ -98,7 +96,7 @@ const Home = () => {
             <CardList 
               key={index}
               categoryID={category.id} 
-              data={books} 
+              books={books} 
               title={<Link to={`/category/${category.id}`}><h2 className="category-title">Sem Categoria</h2></Link> }
             />
           );

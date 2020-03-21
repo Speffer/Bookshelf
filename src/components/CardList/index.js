@@ -3,12 +3,7 @@ import { Row, Col, Card } from 'antd';
 import { Link } from 'react-router-dom';
 import './index.css'
 
-const CardList = ({ title, data, categoryID }) => {
-
-  const [books, setBooks] = useState([]);
-
-  useEffect(() => setBooks(data), [data]);
-
+const CardList = ({ title, books, categoryID }) => {
   const renderCard = useCallback(() => {
     let count = 0;
 
