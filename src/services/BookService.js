@@ -1,13 +1,9 @@
 const save = (book) => {
   let storageBooks = localStorage.getItem('books');
   let parseBooks = [ ...JSON.parse(storageBooks)];
-  let newBook = {};
+  let newBook = [];
   
-  if(parseBooks) {
-    newBook = [ ...parseBooks, { ...book, id: parseBooks.length > 0 ? parseBooks.length + 1 : 1 }]
-  }else {
-    newBook = [ ...book ]
-  }
+  newBook = [ ...parseBooks, { ...book, id: parseBooks.length > 0 ? parseBooks.length + 1 : 1 }]
   
   localStorage.setItem('books', JSON.stringify(newBook));
 };

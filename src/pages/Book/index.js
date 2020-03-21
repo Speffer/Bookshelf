@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Row, Col, Button, Card, Typography, Comment, Avatar, Input, Popconfirm } from 'antd';
+import { Row, Col, Button, Card, Typography, Popconfirm } from 'antd';
 import { useParams } from 'react-router-dom';
 import CategoryService from '../../services/CategoryService';
 import BookService from '../../services/BookService';
@@ -7,22 +7,16 @@ import MessageUtils from '../../utils/MessageUtils';
 import moment from 'moment';
 import '../../index.css'
 import EditBookModal from './EditBookModal';
+import BookComment from './BookComment';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const { Paragraph, Text } = Typography;
-const { TextArea } = Input;
-
 
 const Book = ({ history }) => {
   const [book, setBook] = useState({});
   const [categoryTitle, setCategoryTitle] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const { id } = useParams();
-
-  const actions = [
-    <Button size="small" type="primary">Editar</Button>,
-    <Button className="btn-default" size="small">Excluir</Button>,
-  ];
 
   useEffect(() => {
     setBook(history.location.state && history.location.state.book);
@@ -36,9 +30,9 @@ const Book = ({ history }) => {
       history.push('/')
       MessageUtils.swalSuccess('Livro deletado com sucesso!');
     } catch (error) {
-      
+      // Se fosse integrado com uma api precisaria do catch
     }
-  }
+  };
 
   const getCategories = useCallback(() => {
     try {
@@ -46,7 +40,7 @@ const Book = ({ history }) => {
 
       let categories = JSON.parse(response);
       
-      if(categories.length > 0 && book) {
+      if(categories.length > 0 && history.location.state) {
         categories.map((category) => {
           if(category.id === history.location.state.book.category) {
             setCategoryTitle(category.title);
@@ -119,45 +113,7 @@ const Book = ({ history }) => {
         </Col>
 
         <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-          <Card title={<h3 className="category-title">Comentários: </h3>}>
-            <Comment
-              avatar={
-                <Avatar
-                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                  alt="Han Solo"
-                />
-              }
-              content={
-                <div>
-                    <TextArea rows={4} />
-                    <Button style={{ marginTop: 10 }} type="primary">
-                      Novo Comentário
-                    </Button>
-                </div>
-              }
-            />
-
-            <Comment
-              actions={actions}
-              author={<p>Han Solo</p>}
-              avatar={
-                <Avatar
-                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                  alt="Han Solo"
-                />
-              }
-              content={
-                <p>
-                  We supply a series of design principles, practical patterns and high quality design
-                  resources (Sketch and Axure), to help people create their product prototypes beautifully
-                  and efficiently.
-                </p>
-              }
-              datetime={
-                moment(book.timestamp).format('DD/MM/YYYY')
-              }
-            />
-          </Card>
+          <BookComment bookID={parseInt(id)} />
         </Col>
       </Row>
     </div>
