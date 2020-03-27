@@ -59,49 +59,52 @@ const Home = () => {
   };
 
   const renderCardLists = useCallback(() => {
-    return categories.map((category, index) => {
-      switch(category.id) {
-        case CategoriesEnum.READ:
-          return (
-            <CardList
-              key={index} 
-              categoryID={category.id} 
-              books={books}
-              title={<Link to={`/category/${category.id}`}><h2 className="category-title">Já Lidos</h2></Link> } 
-            />
-          );
+    if(categories.length > 0) {
+      return categories.map((category, index) => {
+        switch(category.id) {
+          case CategoriesEnum.READ:
+            return (
+              <CardList
+                key={index} 
+                categoryID={category.id} 
+                books={books}
+                title={<Link to={`/category/${category.id}`}><h2 className="category-title">Já Lidos</h2></Link> } 
+              />
+            );
 
-        case CategoriesEnum.READING:
-          return (
-            <CardList 
-              key={index}
-              categoryID={category.id} 
-              books={books} 
-              title={<Link to={`/category/${category.id}`}><h2 className="category-title">Estou Lendo</h2></Link> } 
-            />
-          );
+          case CategoriesEnum.READING:
+            return (
+              <CardList 
+                key={index}
+                categoryID={category.id} 
+                books={books} 
+                title={<Link to={`/category/${category.id}`}><h2 className="category-title">Estou Lendo</h2></Link> } 
+              />
+            );
 
-        case CategoriesEnum.WANT_TO_READ:
-          return (
-            <CardList 
-              key={index}
-              categoryID={category.id} 
-              books={books} 
-              title={<Link to={`/category/${category.id}`}><h2 className="category-title">Quero Ler</h2></Link> } 
-            />
-          );
+          case CategoriesEnum.WANT_TO_READ:
+            return (
+              <CardList 
+                key={index}
+                categoryID={category.id} 
+                books={books} 
+                title={<Link to={`/category/${category.id}`}><h2 className="category-title">Quero Ler</h2></Link> } 
+              />
+            );
 
-        case CategoriesEnum.WITHOUT:
-          return (
-            <CardList 
-              key={index}
-              categoryID={category.id} 
-              books={books} 
-              title={<Link to={`/category/${category.id}`}><h2 className="category-title">Sem Categoria</h2></Link> }
-            />
-          );
-      }
-    });
+          case CategoriesEnum.WITHOUT:
+            return (
+              <CardList 
+                key={index}
+                categoryID={category.id} 
+                books={books} 
+                title={<Link to={`/category/${category.id}`}><h2 className="category-title">Sem Categoria</h2></Link> }
+              />
+            );
+        }
+      });
+    }
+    
   }, [categories, books]);
 
   return (
