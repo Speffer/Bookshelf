@@ -5,7 +5,9 @@ import BookService from '../../services/BookService';
 import CategoryService from '../../services/CategoryService';
 import CardList from '../../components/CardList';
 import AnyUtils from '../../utils/AnyUtils';
+import { Link } from 'react-router-dom';
 import '../../index.css'
+import { ArrowLeftOutlined } from '@ant-design/icons';
 
 
 const Category = () => {
@@ -80,7 +82,14 @@ const Category = () => {
         key={books.length}
         categoryID={parseInt(id)} 
         books={books}
-        title={<h2 style={{ color: '#f92240' }}>{ title }</h2>} 
+        title={
+          <h2 style={{ color: '#f92240' }}>
+            <Link to="/">
+              <ArrowLeftOutlined style={{ color: '#f92240', marginRight: 3 }} />
+            </Link> 
+            { title }
+          </h2>
+        } 
       />
     </div>
   );

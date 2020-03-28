@@ -52,7 +52,9 @@ const BookComment = ({ bookID }) => {
     try {
       let response = CommentService.get();
 
-      setComments(JSON.parse(response));
+      let commentsByDate = AnyUtils.orderByDate(JSON.parse(response)); 
+
+      setComments(commentsByDate);
     } catch (error) {
       // Se fosse integrado com uma api precisaria do catch
     }
