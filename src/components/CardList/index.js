@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Row, Col, Card } from 'antd';
 import { Link } from 'react-router-dom';
 import './index.css'
@@ -28,7 +28,7 @@ const CardList = ({ title, books, categoryID }) => {
     });
     
     return count > 0 ? booksToShow : <p style={{ color: '#172645' }}>Sem livros para essa categoria!</p>;
-  }, [books]);
+  }, [books, categoryID]);
 
   return (
     <Row style={{ marginTop: 40 }}>

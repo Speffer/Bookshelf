@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { Layout } from 'antd';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import Home from './pages/Home';
 import Book from './pages/Book';
 import Category from './pages/Category';
@@ -13,7 +13,7 @@ const { Content } = Layout;
 
 
 const App = () => {
-  const history = createHistory();
+  const history = createBrowserHistory();
 
   useEffect(() => {
     initLocalStorage();
